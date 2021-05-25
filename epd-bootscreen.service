@@ -1,0 +1,13 @@
+[Unit]
+Description=Show sign of life on e-paper screen
+DefaultDependencies=no
+After=sysinit.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/epd-bootscreen/epd-bootscreen e-paper
+User=root
+Group=root
+
+[Install]
+WantedBy=sysinit.target
