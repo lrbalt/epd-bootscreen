@@ -1,6 +1,6 @@
 use std::convert::From;
 
-use embedded_graphics::pixelcolor::{PixelColor, Rgb888};
+use embedded_graphics::pixelcolor::{PixelColor, Rgb888, RgbColor};
 
 /// Only for the Black/White/Color-Displays
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -22,9 +22,9 @@ impl PixelColor for TriColor {
 impl From<TriColor> for Rgb888 {
     fn from(color: TriColor) -> Rgb888 {
         match color {
-            TriColor::Black => Rgb888::new(0xF, 0xF, 0xF),
-            TriColor::White => Rgb888::new(0,0,0),
-            TriColor::Chromatic => Rgb888::new(0xF, 0x0, 0x0),
+            TriColor::Black => Rgb888::BLACK,
+            TriColor::White => Rgb888::WHITE,
+            TriColor::Chromatic => Rgb888::RED,
         }
     }
 }

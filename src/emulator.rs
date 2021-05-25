@@ -12,7 +12,8 @@ pub fn emulator() {
     info!("Creating display and window 212x104 using emulator");
     let mut display: SimulatorDisplay<TriColor> = SimulatorDisplay::with_default_color(Size::new(212, 104), TriColor::White);
     let output_settings = OutputSettingsBuilder::new()
-        .theme(BinaryColorTheme::LcdWhite)
+        .theme(BinaryColorTheme::Default)
+        .pixel_spacing(0)
         .build();
     let mut window = Window::new("2.13\" 212x104", &output_settings);
 
