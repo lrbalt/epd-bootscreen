@@ -2,6 +2,8 @@ use clap::Clap;
 use log::{info, LevelFilter};
 
 mod draw;
+mod color;
+mod tri_display;
 #[cfg(feature = "emulator")]
 mod emulator;
 #[cfg(feature = "e-paper")]

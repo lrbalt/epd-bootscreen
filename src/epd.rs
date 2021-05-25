@@ -1,3 +1,4 @@
+use crate::draw::draw_boot_screen;
 use epd_waveshare::{
     color::*,
     epd2in13bc::{Display2in13bc, Epd2in13bc},
@@ -11,14 +12,12 @@ use linux_embedded_hal::{
 };
 use log::{debug, info, LevelFilter};
 
-use crate::draw::draw_boot_screen;
-
 fn split_buffer(buffer: &Display2in13bc) -> (Display2in13bc, Display2in13bc) {
     let mut bw = Display2in13bc::default();
     let mut cr = Display2in13bc::default();
     for (i, &v) in buffer.buffer().iter().enumerate() {
-        bw.get_mut_buffer()[i]=v;
-        cr.get_mut_buffer()[i]=0xFF;
+        bw.get_mut_buffer()[i] = v;
+        cr.get_mut_buffer()[i] = 0xFF;
     }
     (bw, cr)
 }
@@ -60,7 +59,7 @@ pub fn epd() {
     let mut delay = Delay {};
 
     debug!("Initializing i-ink screen");
-    let mut epd =
+    let epd =
         Epd2in13bc::new(&mut spi, cs, busy, dc, rst, &mut delay).expect("eink initalize error");
     debug!("Initializing done");
 
@@ -69,11 +68,13 @@ pub fn epd() {
     display.set_rotation(DisplayRotation::Rotate90);
     display.clear_buffer(Color::White);
 
-    draw_boot_screen(&mut display);
+    draw_boot_screen(&mut display).unwrap();
 
     debug!("Update display");
     let (buffer, chromatic_buffer) = split_buffer(&display);
-    epd.update_color_frame(&mut spi, &buffer.buffer(), &chromatic_buffer.buffer())
+    epd.update_color_frame(&mut spi, &buffer, &chromatic_buffer)
         .unwrap();
-    epd.display_frame(&mut spi, &mut delay).unwrap();
+    epd.display_frame(&mut self.spi, &mut self.delay).unwrap();
+
+    screen.update().unwrap();
 }
