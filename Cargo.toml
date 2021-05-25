@@ -1,0 +1,24 @@
+[package]
+name = "epd-bootscreen"
+version = "0.1.0"
+authors = ["Reinier Balt <lrbalt@gmail.com>"]
+edition = "2018"
+
+[features]
+emulator = ["embedded-graphics-simulator"]
+e-paper = ["epd-waveshare", "linux-embedded-hal"]
+default = ["e-paper"]
+
+[dependencies]
+clap = { version = "3.0.0-beta.2", default-features = false, features = [
+    "derive",
+    "std"
+] }
+log = "*"
+env_logger = "*"
+embedded-graphics = { version = "*" }
+profont = "*"
+chrono = "*"
+embedded-graphics-simulator = { version = "*", optional = true }
+epd-waveshare = { git = "https://github.com/lrbalt/epd-waveshare.git", branch = "epd2in13bc", version = "*", optional = true }
+linux-embedded-hal = { version = "*", optional = true }
