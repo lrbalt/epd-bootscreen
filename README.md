@@ -1,19 +1,19 @@
 # e-paper bootscreen
 Show a simple screen on e-paper display during boot of a systemd system
 
-# build instructions
+# Build instructions
 Select one or both features to run:
 * `e-paper` enables the Waveshare 2.13" e-paper display
 * `emulator` uses the embedded simulator to show the screen in a window
 
 ```
-cargo run --release --features emulator -- emulator
+cargo run --release --no-default-features --features emulator -- emulator
 ```
 
-or
+or on a device with the e-paper display:
 
 ```
-cargo run --release --features e-paper -- e-paper
+cargo run --release --no-default-features --features e-paper -- e-paper
 ```
 
 For e-paper you need access to `/dev/spidev0.0`. You may need to run as root: `sudo target/release/epd-bootscreen e-paper`
