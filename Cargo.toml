@@ -20,5 +20,5 @@ embedded-graphics = { version = "*" }
 profont = "*"
 chrono = "*"
 embedded-graphics-simulator = { version = "*", optional = true }
-epd-waveshare = { git = "https://github.com/lrbalt/epd-waveshare.git", branch = "epd2in13bc", version = "*", optional = true }
+epd-waveshare = { git = "https://github.com/lrbalt/epd-waveshare.git", branch = "tri-color", version = "*", optional = true }
 linux-embedded-hal = { version = "*", optional = true }

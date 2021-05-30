@@ -2,7 +2,7 @@ use crate::draw::draw_boot_screen;
 use epd_waveshare::{
     color::*,
     epd2in13bc::{Display2in13bc, Epd2in13bc},
-    graphics::{Display, DisplayRotation},
+    graphics::{DisplayRotation, TriDisplay},
     prelude::*,
 };
 use linux_embedded_hal::{
@@ -10,17 +10,7 @@ use linux_embedded_hal::{
     sysfs_gpio::Direction,
     Delay, Pin, Spidev,
 };
-use log::{debug, info, LevelFilter};
-
-fn split_buffer(buffer: &Display2in13bc) -> (Display2in13bc, Display2in13bc) {
-    let mut bw = Display2in13bc::default();
-    let mut cr = Display2in13bc::default();
-    for (i, &v) in buffer.buffer().iter().enumerate() {
-        bw.get_mut_buffer()[i] = v;
-        cr.get_mut_buffer()[i] = 0xFF;
-    }
-    (bw, cr)
-}
+use log::debug;
 
 pub fn epd() {
     debug!("Configuring pins");
@@ -59,22 +49,19 @@ pub fn epd() {
     let mut delay = Delay {};
 
     debug!("Initializing i-ink screen");
-    let epd =
+    let mut epd =
         Epd2in13bc::new(&mut spi, cs, busy, dc, rst, &mut delay).expect("eink initalize error");
     debug!("Initializing done");
 
     debug!("Creating display for e-paper screen with 90 degrees rotation");
     let mut display = Display2in13bc::default();
     display.set_rotation(DisplayRotation::Rotate90);
-    display.clear_buffer(Color::White);
+    display.clear_buffer(TriColor::White);
 
-    draw_boot_screen(&mut display).unwrap();
+    draw_boot_screen(&mut display);
 
     debug!("Update display");
-    let (buffer, chromatic_buffer) = split_buffer(&display);
-    epd.update_color_frame(&mut spi, &buffer, &chromatic_buffer)
+    epd.update_color_frame(&mut spi, &display.bw_buffer(), &display.chromatic_buffer())
         .unwrap();
-    epd.display_frame(&mut self.spi, &mut self.delay).unwrap();
-
-    screen.update().unwrap();
+    epd.display_frame(&mut spi, &mut delay).unwrap();
 }

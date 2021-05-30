@@ -1,13 +1,14 @@
 use clap::Clap;
 use log::{info, LevelFilter};
 
-mod draw;
 mod color;
-mod tri_display;
+mod draw;
 #[cfg(feature = "emulator")]
 mod emulator;
 #[cfg(feature = "e-paper")]
 mod epd;
+#[cfg(not(feature = "e-paper"))]
+mod tri_color;
 
 #[derive(Clap)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Reinier Balt <lrbalt@gmail.com>")]

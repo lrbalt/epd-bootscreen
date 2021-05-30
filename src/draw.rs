@@ -1,8 +1,6 @@
 use crate::color::TriColor;
 use chrono::Local;
-use embedded_graphics::{
-    egrectangle, egtext, prelude::*, primitive_style, text_style,
-};
+use embedded_graphics::{egrectangle, egtext, prelude::*, primitive_style, text_style};
 use profont::{ProFont12Point, ProFont18Point};
 use std::convert::Infallible;
 
