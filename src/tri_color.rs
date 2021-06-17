@@ -26,3 +26,13 @@ impl From<TriColor> for Rgb888 {
         }
     }
 }
+
+impl From<Rgb888> for TriColor {
+    fn from(color: Rgb888) -> TriColor {
+        match color {
+            Rgb888::BLACK => TriColor::Black,
+            Rgb888::RED => TriColor::Chromatic,
+            _ => TriColor::White,
+        }
+    }
+}

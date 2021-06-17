@@ -1,7 +1,11 @@
 use crate::color::TriColor;
 use chrono::Local;
-use embedded_graphics::{egrectangle, egtext, prelude::*, primitive_style, text_style};
-use profont::{ProFont12Point, ProFont18Point};
+use embedded_graphics::{
+    mono_font::MonoTextStyle,
+    prelude::*,
+    primitives::{PrimitiveStyleBuilder, Rectangle},
+    text::{Baseline, Text, TextStyleBuilder},
+};
 use std::convert::Infallible;
 
 fn draw_centered_large<DT>(
@@ -11,16 +15,16 @@ fn draw_centered_large<DT>(
     left: i32,
     width: i32,
     color: TriColor,
-) -> Result<(), Infallible>
+) -> Result<Point, Infallible>
 where
-    DT: DrawTarget<TriColor, Error = Infallible>,
+    DT: DrawTarget<Color = TriColor, Error = Infallible>,
 {
-    let mut text = egtext!(
-        text = &text,
-        top_left = (left, top),
-        style = text_style!(font = ProFont18Point, text_color = color)
-    );
-    text = text.translate(Point::new((width - text.size().width as i32) / 2, 0));
+    let style = MonoTextStyle::new(&profont::PROFONT_18_POINT, color);
+    let text_style = TextStyleBuilder::new().baseline(Baseline::Top).build();
+    let mut text = Text::with_text_style(text, Point::new(left, top), style, text_style);
+
+    let size = text.bounding_box().size;
+    text = text.translate(Point::new((width - size.width as i32) / 2, 0));
     text.draw(display)
 }
 
@@ -31,34 +35,33 @@ fn draw_centered_medium<DT>(
     left: i32,
     width: i32,
     color: TriColor,
-) -> Result<(), Infallible>
+) -> Result<Point, Infallible>
 where
-    DT: DrawTarget<TriColor, Error = Infallible>,
+    DT: DrawTarget<Color = TriColor, Error = Infallible>,
 {
-    let mut text = egtext!(
-        text = &text,
-        top_left = (left, top),
-        style = text_style!(font = ProFont12Point, text_color = color)
-    );
-    text = text.translate(Point::new((width - text.size().width as i32) / 2, 0));
+    let style = MonoTextStyle::new(&profont::PROFONT_12_POINT, color);
+    let text_style = TextStyleBuilder::new().baseline(Baseline::Top).build();
+    let mut text = Text::with_text_style(text, Point::new(left, top), style, text_style);
+
+    let size = text.bounding_box().size;
+    text = text.translate(Point::new((width - size.width as i32) / 2, 0));
     text.draw(display)
 }
 
 pub fn draw_boot_screen<DT>(display: &mut DT)
 where
-    DT: DrawTarget<TriColor, Error = Infallible>,
+    DT: DrawTarget<Color = TriColor, Error = Infallible>,
 {
-    egrectangle!(
-        top_left = (0, 0),
-        bottom_right = (212, 104),
-        style = primitive_style!(
-            stroke_color = TriColor::White,
-            fill_color = TriColor::White,
-            stroke_width = 1
-        )
-    )
-    .draw(display)
-    .unwrap();
+    let style = PrimitiveStyleBuilder::new()
+        .stroke_color(TriColor::White)
+        .fill_color(TriColor::White)
+        .stroke_width(1)
+        .build();
+
+    Rectangle::new(Point::new(0, 0), Size::new(212, 104))
+        .into_styled(style)
+        .draw(display)
+        .unwrap();
 
     draw_centered_large(display, "Booting Solar Pi", 10, 0, 212, TriColor::Chromatic).unwrap();
 
