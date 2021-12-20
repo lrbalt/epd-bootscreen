@@ -26,6 +26,6 @@ On a Raspberry Pi Zero, I've added the `epd-bootscreen.server` to `/lib/systemd/
 sudo systemctl enable epd-bootscreen
 ```
 
-This scripts requires an executable in `/home/pi/epd-bootscreen/` but you can change this to your liking
+This scripts requires an executable in `/home/pi/epd-bootscreen/` but you can change this to your liking.
 
-Please note that epd-bootscreen needs access to `/dev/spidev0.0`. It seems the earliest that this device is available is at the `sysinit` target. I'd like to find out if replacing `spidev` can change this
+Please note that epd-bootscreen needs access to `/dev/spidev0.0`. It seems the earliest that this device is available is at the `sysinit` target. I'd like to find out if replacing `spidev` can change this.

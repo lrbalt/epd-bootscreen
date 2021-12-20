@@ -1,4 +1,4 @@
-use clap::Clap;
+use clap::Parser;
 use log::{info, LevelFilter};
 
 mod color;
@@ -10,7 +10,7 @@ mod epd;
 #[cfg(not(feature = "e-paper"))]
 mod tri_color;
 
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Reinier Balt <lrbalt@gmail.com>")]
 struct Opts {
     /// A level of verbosity, and can be used multiple times
@@ -20,7 +20,7 @@ struct Opts {
     subcmd: SubCommand,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 enum SubCommand {
     /// Show bootscreen on e-paper screen
     #[cfg(feature = "e-paper")]
