@@ -68,7 +68,7 @@ where
     let now = Local::now();
     draw_centered_medium(
         display,
-        &format!("{}", now.date().format("%d-%m-%Y")),
+        &format!("{}", now.date_naive().format("%d-%m-%Y")),
         55,
         0,
         212,

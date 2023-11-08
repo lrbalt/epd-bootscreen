@@ -1,7 +1,7 @@
 use embedded_graphics::pixelcolor::{PixelColor, Rgb888, RgbColor};
 
 /// Only for the Black/White/Color-Displays
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum TriColor {
     /// Black color
     Black,
