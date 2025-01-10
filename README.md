@@ -20,7 +20,7 @@ For e-paper you need access to `/dev/spidev0.0`. You may need to run as root: `s
 
 # Installation
 
-On a Raspberry Pi Zero, I've added the `epd-bootscreen.server` to `/lib/systemd/system` and enabled the service using 
+On a Raspberry Pi Zero, I've added the `epd-bootscreen.service` to `/lib/systemd/system` and enabled the service using 
 
 ```
 sudo systemctl enable epd-bootscreen

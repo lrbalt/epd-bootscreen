@@ -1,8 +1,8 @@
 [package]
 name = "epd-bootscreen"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Reinier Balt <lrbalt@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [features]
 emulator = ["embedded-graphics-simulator"]
@@ -10,15 +10,15 @@ e-paper = ["epd-waveshare", "linux-embedded-hal"]
 default = ["emulator"]
 
 [dependencies]
-clap = { version = "3.2.25", default-features = false, features = [
+clap = { version = "4.5.26", default-features = false, features = [
     "derive",
     "std"
 ] }
-log = "0.4.17"
-env_logger = "0.10.0"
+log = "0.4.22"
+env_logger = "0.11.6"
 embedded-graphics = { version= "0.8.1" }
 profont = "0.7.0"
-chrono = "0.4.19"
-embedded-graphics-simulator = { version = "0.5.0", optional = true }
-epd-waveshare = { version = "0.5.0", optional = true }
-linux-embedded-hal = { version = "0.3.2", optional = true }
+chrono = "0.4.39"
+embedded-graphics-simulator = { version = "0.7.0", optional = true }
+epd-waveshare = { version = "0.6.0", optional = true }
+linux-embedded-hal = { version = "0.4.0", optional = true }
